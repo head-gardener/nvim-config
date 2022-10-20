@@ -1,6 +1,8 @@
 vim.o.background = 'dark'
 vim.cmd('colorscheme gruvbox')
 
+vim.o.signcolumn = "yes"
+
 vim.o.tabstop = 2
 vim.o.softtabstop = 2
 vim.o.shiftwidth = 2
@@ -58,4 +60,8 @@ require('lualine').setup {
   inactive_winbar = {},
   extensions = {}
 }
+
+require('nvim-autopairs').setup({
+  check_ts = true,
+})
 

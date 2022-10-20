@@ -5,7 +5,7 @@ vim.keymap.set('n', '<Leader>ph', ':PickerSplit<CR>', { noremap = true })
 vim.keymap.set('n', '<Leader>pb', ':PickerBuffer<CR>', { noremap = true })
 
 -- Commentary
-vim.keymap.set('n', '<C-_>', ':Commentary<CR>', { noremap = true })
+vim.keymap.set({'n', 'v'}, '<C-_>', ':Commentary<CR>', { noremap = true })
 
 -- Splits navigation
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { noremap = true })
@@ -17,6 +17,7 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { noremap = true })
 vim.keymap.set('i', 'jj', '<Esc>', { noremap = true })
 vim.keymap.set('n', '<Leader>w', ':w<CR>', { noremap = true })
 vim.keymap.set('n', '<Leader>q', ':q<CR>', { noremap = true })
+vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', {noremap = true})
 
 -- LSP
 local opts = { noremap=true, silent=true }
@@ -46,10 +47,61 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 
-require('lspconfig').java_language_server.setup{
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+require('lspconfig').java_language_server.setup {
     on_attach = on_attach,
     flags = lsp_flags,
-    cmd = { '~/Programs/jdt-eclipse-ls/bin/jdtls' }
+    cmd = { '/home/mkultra/Programs/jdt-eclipse-ls/bin/jdtls' },
+    capabilities = capabilites,
+    -- MIGHT NEED IMPROVEMENT
+    root_dir = function(fname)    
+        return vim.loop.cwd()
+    end,
 }
 
+local cmp = require('cmp')
+
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = {
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+      	cmp.select_next_item()
+      elseif vim.fn["vsnip#available"](1) == 1 then
+      	feedkey("<Plug>(vsnip-expand-or-jump)", "")
+      else
+      	fallback()
+      end
+    end, { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(function()
+      if cmp.visible() then
+      	cmp.select_prev_item()
+      elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+      	feedkey("<Plug>(vsnip-jump-prev)", "")
+      end
+    end, { "i", "s" })
+  },
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+    { name = 'buffer' }
+  })
+})
+
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = {"elixir", "heex", "eex", "java"},
+  sync_install = false,
+  ignore_install = { },
+  highlight = {
+    enable = true,
+    disable = { },
+  },
+}
 
