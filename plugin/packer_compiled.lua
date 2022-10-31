@@ -74,6 +74,11 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  Sierra = {
+    loaded = true,
+    path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/Sierra",
+    url = "https://github.com/AlessandroYorba/Sierra"
+  },
   ["barbar.nvim"] = {
     loaded = true,
     path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/barbar.nvim",
@@ -129,6 +134,11 @@ _G.packer_plugins = {
     path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
+  ["nvim-tree.lua"] = {
+    loaded = true,
+    path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
+    url = "https://github.com/nvim-tree/nvim-tree.lua"
+  },
   ["nvim-treesitter"] = {
     loaded = true,
     path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
@@ -138,6 +148,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
+  },
+  ["oxocarbon.nvim"] = {
+    loaded = true,
+    path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/oxocarbon.nvim",
+    url = "https://github.com/shaunsingh/oxocarbon.nvim"
   },
   ["packer.nvim"] = {
     loaded = true,
@@ -158,11 +173,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/vim-picker",
     url = "https://github.com/srstevenson/vim-picker"
-  },
-  ["vim-projectionist"] = {
-    loaded = true,
-    path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/vim-projectionist",
-    url = "https://github.com/tpope/vim-projectionist"
   },
   ["vim-smoothie"] = {
     loaded = true,
