@@ -1,6 +1,7 @@
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use 'tpope/vim-commentary'
+  use 'tpope/vim-projectionist'
   use {
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons' }
@@ -10,6 +11,11 @@ require('packer').startup(function(use)
     requires = { 'kyazdani42/nvim-web-devicons' }
   }
   use 'srstevenson/vim-picker'
+  use 'nvim-lua/plenary.nvim'
+  use 'nvim-telescope/telescope.nvim'
+  use 'folke/zen-mode.nvim'
+  use 'folke/twilight.nvim'
+  use { 'lewis6991/gitsigns.nvim', tag = 'release' }
 
   -- themes
   use 'ellisonleao/gruvbox.nvim'

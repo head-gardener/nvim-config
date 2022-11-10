@@ -109,6 +109,11 @@ _G.packer_plugins = {
     path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/cmp-vsnip",
     url = "https://github.com/hrsh7th/cmp-vsnip"
   },
+  ["gitsigns.nvim"] = {
+    loaded = true,
+    path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
+    url = "https://github.com/lewis6991/gitsigns.nvim"
+  },
   ["gruvbox.nvim"] = {
     loaded = true,
     path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/gruvbox.nvim",
@@ -159,6 +164,21 @@ _G.packer_plugins = {
     path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/packer.nvim",
     url = "https://github.com/wbthomason/packer.nvim"
   },
+  ["plenary.nvim"] = {
+    loaded = true,
+    path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/plenary.nvim",
+    url = "https://github.com/nvim-lua/plenary.nvim"
+  },
+  ["telescope.nvim"] = {
+    loaded = true,
+    path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/telescope.nvim",
+    url = "https://github.com/nvim-telescope/telescope.nvim"
+  },
+  ["twilight.nvim"] = {
+    loaded = true,
+    path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/twilight.nvim",
+    url = "https://github.com/folke/twilight.nvim"
+  },
   ["vim-commentary"] = {
     loaded = true,
     path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/vim-commentary",
@@ -174,6 +194,11 @@ _G.packer_plugins = {
     path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/vim-picker",
     url = "https://github.com/srstevenson/vim-picker"
   },
+  ["vim-projectionist"] = {
+    loaded = true,
+    path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/vim-projectionist",
+    url = "https://github.com/tpope/vim-projectionist"
+  },
   ["vim-smoothie"] = {
     loaded = true,
     path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/vim-smoothie",
@@ -188,6 +213,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/vim-vsnip",
     url = "https://github.com/hrsh7th/vim-vsnip"
+  },
+  ["zen-mode.nvim"] = {
+    loaded = true,
+    path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/zen-mode.nvim",
+    url = "https://github.com/folke/zen-mode.nvim"
   }
 }
 

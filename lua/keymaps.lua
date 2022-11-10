@@ -7,6 +7,22 @@ vim.keymap.set('n', '<Leader>pb', ':PickerBuffer<CR>', { noremap = true })
 -- Commentary
 vim.keymap.set({ 'n', 'v' }, '<C-_>', ':Commentary<CR>', { noremap = true })
 
+-- Zen
+vim.keymap.set('n', '<Space>ze', ':ZenMode<CR>', { noremap = true })
+
+-- Projectionist
+vim.keymap.set('n', '<Leader>aa', ':A<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>as', ':AS<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>av', ':AV<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>at', ':AT<CR>', { noremap = true })
+
+-- Telescope
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+
 -- Splits navigation
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { noremap = true })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { noremap = true })
@@ -19,6 +35,7 @@ vim.keymap.set('n', '<Leader>w', ':w<CR>', { noremap = true })
 vim.keymap.set('n', '<Leader>q', ':q<CR>', { noremap = true })
 vim.keymap.set('n', '<Leader>mm', ':!make<CR>', { noremap = true })
 vim.keymap.set('n', '<Leader>mt', ':!make test<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>hh', ':noh<CR>', { noremap = true })
 vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', { noremap = true })
 
 -- NVim Tree
@@ -98,6 +115,12 @@ lspconfig.lua_ls.setup {
   capabilities = capabilites,
 }
 
+lspconfig.elixirls.setup {
+  on_attach = on_attach,
+  cmd = { '/home/mkultra/Programs/elixir-ls/language_server.sh' },
+  capabilities = capabilites,
+}
+
 local cmp = require('cmp')
 
 cmp.setup({
@@ -108,7 +131,7 @@ cmp.setup({
   },
   mapping = {
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    ["<Tab>"] = cmp.mapping(function(fallback)
+    ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif vim.fn["vsnip#available"](1) == 1 then
@@ -117,7 +140,7 @@ cmp.setup({
         fallback()
       end
     end, { "i", "s" }),
-    ["<S-Tab>"] = cmp.mapping(function()
+    ['<S-Tab>'] = cmp.mapping(function()
       if cmp.visible() then
         cmp.select_prev_item()
       elseif vim.fn["vsnip#jumpable"](-1) == 1 then
@@ -128,7 +151,8 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'vsnip' },
-    { name = 'buffer' }
+    { name = 'buffer' },
+    { name = 'path' },
   })
 })
 
