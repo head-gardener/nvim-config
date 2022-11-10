@@ -79,11 +79,6 @@ _G.packer_plugins = {
     path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/Sierra",
     url = "https://github.com/AlessandroYorba/Sierra"
   },
-  ["barbar.nvim"] = {
-    loaded = true,
-    path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/barbar.nvim",
-    url = "https://github.com/romgrk/barbar.nvim"
-  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -168,11 +163,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
-  },
-  ["telescope.nvim"] = {
-    loaded = true,
-    path = "/home/mkultra/.local/share/nvim/site/pack/packer/start/telescope.nvim",
-    url = "https://github.com/nvim-telescope/telescope.nvim"
   },
   ["twilight.nvim"] = {
     loaded = true,

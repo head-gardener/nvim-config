@@ -6,13 +6,8 @@ require('packer').startup(function(use)
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons' }
   }
-  use {
-    'romgrk/barbar.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons' }
-  }
   use 'srstevenson/vim-picker'
   use 'nvim-lua/plenary.nvim'
-  use 'nvim-telescope/telescope.nvim'
   use 'folke/zen-mode.nvim'
   use 'folke/twilight.nvim'
   use { 'lewis6991/gitsigns.nvim', tag = 'release' }

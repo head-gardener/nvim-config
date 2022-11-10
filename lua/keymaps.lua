@@ -10,18 +10,18 @@ vim.keymap.set({ 'n', 'v' }, '<C-_>', ':Commentary<CR>', { noremap = true })
 -- Zen
 vim.keymap.set('n', '<Space>ze', ':ZenMode<CR>', { noremap = true })
 
+-- Twilight
+vim.keymap.set('n', '<Space>tw', ':Twilight<CR>', { noremap = true })
+
+-- Gitsigns
+vim.keymap.set('n', '<Space>hs', ':Gitsigns stage_hunk<CR>', { noremap = true })
+vim.keymap.set('n', '<Space>hr', ':Gitsigns reset_hunk<CR>', { noremap = true })
+
 -- Projectionist
 vim.keymap.set('n', '<Leader>aa', ':A<CR>', { noremap = true })
 vim.keymap.set('n', '<Leader>as', ':AS<CR>', { noremap = true })
 vim.keymap.set('n', '<Leader>av', ':AV<CR>', { noremap = true })
 vim.keymap.set('n', '<Leader>at', ':AT<CR>', { noremap = true })
-
--- Telescope
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 -- Splits navigation
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { noremap = true })
@@ -130,12 +130,12 @@ cmp.setup({
     end,
   },
   mapping = {
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<CR>'] = cmp.mapping.confirm({ select = false }),
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif vim.fn["vsnip#available"](1) == 1 then
-        feedkey("<Plug>(vsnip-expand-or-jump)", "")
+        vim.api.feedkey("<Plug>(vsnip-expand-or-jump)", "")
       else
         fallback()
       end
@@ -144,7 +144,7 @@ cmp.setup({
       if cmp.visible() then
         cmp.select_prev_item()
       elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-        feedkey("<Plug>(vsnip-jump-prev)", "")
+        vim.api.feedkey("<Plug>(vsnip-jump-prev)", "")
       end
     end, { "i", "s" })
   },

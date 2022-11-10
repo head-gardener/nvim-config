@@ -8,7 +8,11 @@ vim.g.sierra_Twilight = 1
 vim.cmd('colorscheme sierra')
 vim.o.background = 'dark'
 
-vim.o.signcolumn = "yes"
+-- hide statusline
+-- vim.cmd("set noshowmode")
+-- vim.cmd("set noruler")
+-- vim.cmd("set laststatus=0")
+-- vim.cmd("set noshowcmd")
 
 vim.o.tabstop = 2
 vim.o.softtabstop = 2
@@ -17,8 +21,9 @@ vim.o.expandtab = true
 vim.o.autoindent = true
 vim.o.copyindent = true
 
+vim.o.signcolumn = "yes"
 vim.o.hidden = true
-vim.o.number = true
+vim.o.number = false
 vim.o.cursorline = true
 vim.o.showmatch = true
 
@@ -27,36 +32,35 @@ vim.o.hlsearch = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
-require('telescope').setup {
-  defaults = {
-    mappings = {
-      i = {
-        -- map actions.which_key to <C-h> (default: <C-/>)
-        -- actions.which_key shows the mappings for your picker,
-        -- e.g. git_{create, delete, ...}_branch for the git_branches picker
-        ["<C-h>"] = "which_key"
-      }
-    }
-  },
-  pickers = {
-    fzy = {
+local function clock()
+  return os.date("%H:%M:%S")
+end
 
-    }
-    -- Default configuration for builtin pickers goes here:
-    -- picker_name = {
-    --   picker_config_key = value,
-    --   ...
-    -- }
-    -- Now the picker_config_key will be applied every time you call this
-    -- builtin picker
-  },
-  extensions = {
-  }
-}
+---@diagnostic disable-next-line: unused-function, unused-local
+local function arrowsheads(val, rev)
+  local stage = 3
+  local shift = 1
+  if not rev then
+    shift = -1
+  end
+  local str = val .. '  ' .. val .. '  ' .. val .. '  ' .. val
+
+  return function()
+    stage = stage + shift
+    if stage > 3 then
+      stage = 1
+    end
+    if stage < 1 then
+      stage = 3
+    end
+
+    return string.sub(str, stage, stage + 6)
+  end
+end
 
 require('lualine').setup {
   options = {
-    icons_enabled = true,
+    icons_enabled = false,
     theme = 'auto',
     component_separators = { left = '', right = '' },
     section_separators = { left = '', right = '' },
@@ -66,7 +70,7 @@ require('lualine').setup {
     },
     ignore_focus = {},
     always_divide_middle = true,
-    globalstatus = false,
+    globalstatus = true,
     refresh = {
       statusline = 1000,
       tabline = 1000,
@@ -75,11 +79,11 @@ require('lualine').setup {
   },
   sections = {
     lualine_a = { 'mode' },
-    lualine_b = { 'branch', 'diff', 'diagnostics' },
+    lualine_b = { 'diagnostics' },
     lualine_c = { 'filename' },
-    lualine_x = { 'encoding', 'fileformat', 'filetype' },
-    lualine_y = { 'progress' },
-    lualine_z = { 'location' }
+    lualine_x = { 'filetype' },
+    lualine_y = { 'location' },
+    lualine_z = { clock }
   },
   inactive_sections = {
     lualine_a = {},
@@ -89,7 +93,8 @@ require('lualine').setup {
     lualine_y = {},
     lualine_z = {}
   },
-  tabline = {},
+  tabline = {
+  },
   winbar = {},
   inactive_winbar = {},
   extensions = {}
@@ -102,18 +107,155 @@ require('nvim-autopairs').setup({
 require("nvim-tree").setup({
   sort_by = "case_sensitive",
   view = {
-    adaptive_size = true,
+    adaptive_size = false,
+    hide_root_folder = true,
+    side = "right",
+    signcolumn = "yes",
     mappings = {
+      custom_only = false,
       list = {
-        { key = "u", action = "dir_up" },
+      },
+    },
+    float = {
+      enable = true,
+      quit_on_focus_loss = true,
+      open_win_config = {
+        relative = "win",
+        border = "rounded",
+        width = 60,
+        height = 25,
+        row = 12,
+        col = 64,
       },
     },
   },
   renderer = {
     group_empty = true,
+    highlight_opened_files = "dim",
+    indent_width = 2,
+    indent_markers = {
+      enable = true,
+      inline_arrows = true,
+      icons = {
+        corner = "└",
+        edge = "│",
+        item = "│",
+        bottom = "─",
+        none = " ",
+      },
+    },
+    icons = {
+      webdev_colors = true,
+      git_placement = "before",
+      padding = " ",
+      symlink_arrow = " ➛ ",
+      show = {
+        file = false,
+        folder = false,
+        folder_arrow = true,
+        git = false,
+      },
+      glyphs = {
+        default = "",
+        symlink = "",
+        bookmark = "",
+        folder = {
+          arrow_closed = "",
+          arrow_open = "",
+          default = "",
+          open = "",
+          empty = "",
+          empty_open = "",
+          symlink = "",
+          symlink_open = "",
+        },
+        git = {
+          unstaged = "✗",
+          staged = "✓",
+          unmerged = "",
+          renamed = "➜",
+          untracked = "★",
+          deleted = "",
+          ignored = "◌",
+        },
+      },
+    },
+    special_files = { "Cargo.toml", "Makefile", "makefile", "mix.exs", "README.md", "readme.md" },
+    symlink_destination = true,
+  },
+  hijack_directories = {
+    enable = true,
+    auto_open = true,
+  },
+  diagnostics = {
+    enable = false,
+    show_on_dirs = false,
+    debounce_delay = 50,
+    icons = {
+      hint = "",
+      info = "",
+      warning = "",
+      error = "",
+    },
   },
   filters = {
-    dotfiles = true,
+    dotfiles = false,
+    custom = {},
+    exclude = {},
+  },
+  filesystem_watchers = {
+    enable = true,
+    debounce_delay = 50,
+  },
+  git = {
+    enable = false,
+    ignore = false,
+    show_on_dirs = true,
+    timeout = 400,
+  },
+  actions = {
+    use_system_clipboard = true,
+    change_dir = {
+      enable = true,
+      global = false,
+      restrict_above_cwd = false,
+    },
+    expand_all = {
+      max_folder_discovery = 300,
+      exclude = {},
+    },
+    file_popup = {
+      open_win_config = {
+        col = 1,
+        row = 1,
+        relative = "cursor",
+        border = "shadow",
+        style = "minimal",
+      },
+    },
+    open_file = {
+      quit_on_open = false,
+      resize_window = true,
+      window_picker = {
+        enable = true,
+        chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+        exclude = {
+          filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
+          buftype = { "nofile", "terminal", "help" },
+        },
+      },
+    },
+    remove_file = {
+      close_window = true,
+    },
+  },
+  trash = {
+    cmd = "gio trash",
+    require_confirm = true,
+  },
+  live_filter = {
+    prefix = "[FILTER]: ",
+    always_show_folders = true,
   },
 })
 
@@ -146,7 +288,7 @@ require("zen-mode").setup({
       ruler = false, -- disables the ruler text in the cmd line area
       showcmd = false, -- disables the command in the last line of the screen
     },
-    twilight = { enabled = true }, -- enable to start Twilight when zen mode opens
+    twilight = { enabled = false }, -- enable to start Twilight when zen mode opens
     gitsigns = { enabled = false }, -- disables git signs
   },
   -- callback where you can add custom code when the Zen window opens
@@ -163,7 +305,7 @@ require('twilight').setup({
     -- we try to get the foreground from the highlight groups or fallback color
     color = { "Normal", "#ffffff" },
     term_bg = "#000000", -- if guibg=NONE, this will be used to calculate text color
-    inactive = false, -- when true, other windows will be fully dimmed (unless they contain the same buffer)
+    inactive = true, -- when true, other windows will be fully dimmed (unless they contain the same buffer)
   },
   context = 10, -- amount of lines we will try to show around the current line
   treesitter = true, -- use treesitter when available for the filetype
@@ -180,12 +322,12 @@ require('twilight').setup({
 
 require('gitsigns').setup {
   signs                        = {
-    add          = { hl = 'GitSignsAdd', text = '│', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
-    change       = { hl = 'GitSignsChange', text = '│', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
-    delete       = { hl = 'GitSignsDelete', text = '_', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-    topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-    changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
-    untracked    = { hl = 'GitSignsAdd', text = '┆', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
+    add          = { hl = 'Identifier', text = '│' },
+    change       = { hl = 'Special', text = '│' },
+    delete       = { hl = 'Type', text = '_' },
+    topdelete    = { hl = 'Constant', text = '‾' },
+    changedelete = { hl = 'PreProc', text = '~' },
+    untracked    = { hl = 'Underlined', text = '┆' },
   },
   signcolumn                   = true, -- Toggle with `:Gitsigns toggle_signs`
   numhl                        = false, -- Toggle with `:Gitsigns toggle_numhl`
